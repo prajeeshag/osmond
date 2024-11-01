@@ -1,0 +1,9 @@
+site_name: My Docs
+theme:
+  name: material
+  palette:
+    primary: 'indigo'
+    accent: 'pink'
+  font:
+    text: 'Roboto'
+    code: 'Fira Code'
