@@ -12,6 +12,14 @@ from shapely.geometry import Polygon
 app = typer.Typer()
 
 
+class CoastLineScale(str, Enum):
+    f = "fine"
+    h = "high"
+    i = "intermediate"
+    l = "low"  # noqa: E741
+    c = "coarse"
+
+
 def write_bathy(bathy: xr.DataArray, path: Path, name: str = ""):
     with path.open("w") as f:
         title = "Bathymetry"
@@ -59,15 +67,7 @@ def subset_shapefile(  # type: ignore
     return clipped_shp  # type: ignore
 
 
-class CoastLineScale(str, Enum):
-    f = "fine"
-    h = "high"
-    i = "intermediate"
-    l = "low"
-    c = "coarse"
-
-
-@app.command()
+@app.command("create")
 def make_domain(
     bathymetry: Annotated[
         Path, typer.Option(help="Path to GEBCO netcdf bathymetry file")
@@ -122,10 +122,10 @@ def process_coastline(
             f.write(line)
 
 
-@app.command()
+@app.command("plot")
 def plot_domain(inpfile: Path):
-    import matplotlib.pyplot as plt
     import matplotlib.patches as patches
+    import matplotlib.pyplot as plt
 
     bathyfile = inpfile.with_suffix(".bath")
     mapfile = inpfile.with_suffix(".map")

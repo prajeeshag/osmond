@@ -10,10 +10,18 @@ authors = [{ name = "Prajeesh Ag", email = "prajeeshag@gmail.com" }]
 license = { file = "LICENSE" }
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
-dependencies = ["xarray", "netCDF4", "typer", "dask", "cartopy", "geopandas"]
+dependencies = [
+    "xarray",
+    "netCDF4",
+    "typer",
+    "dask",
+    "cartopy",
+    "geopandas",
+    "pydantic>=2.9.2",
+]
 
 [project.scripts]
-medslik_ondemand = "medslik_ondemand.main:app"
+medslik_ondemand = "medslik_ondemand:app"
 
 [project.urls]
 homepage = "https://prajeeshag.github.io/medslik_ondemand"
@@ -40,4 +48,5 @@ name = "cz_gitmoji"
 dev-dependencies = [
     "commitizen>=3.30.0",
     "cz-conventional-gitmoji>=0.6.1",
+    "ruff>=0.7.1",
 ]
