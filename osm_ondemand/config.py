@@ -1,7 +1,7 @@
 from enum import Enum
-from typing import Annotated
+from pathlib import Path
 
-from pydantic import AfterValidator, BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict
 
 
 class ModelBase(BaseModel):
@@ -15,7 +15,7 @@ class Field(ModelBase):
     long_name: str
 
 
-input_fields = {
+input_fields_param = {
     "meteo": {
         "pmsl": Field(
             name="pmsl",
@@ -108,32 +108,35 @@ def validate_fields(fields: dict[str, dict[str, DataField]]):
     validate if fields key in input_fields
     """
     for k, v in fields.items():
-        if k not in input_fields:
-            raise ValueError(f"fields.key should be one of ({input_fields.keys()})")
+        if k not in input_fields_param:
+            raise ValueError(
+                f"fields.key should be one of ({input_fields_param.keys()})"
+            )
         for vk, _ in v.items():
-            if vk not in input_fields[k]:
+            if vk not in input_fields_param[k]:
                 raise ValueError(
-                    f"field.{k}.key should be one of ({input_fields[k].keys()})"
+                    f"field.{k}.key should be one of ({input_fields_param[k].keys()})"
                 )
 
 
-class FieldMap(ModelBase):
-    fields: Annotated[
-        dict[str, dict[str, DataField]],
-        AfterValidator(validate_fields),
-    ]
+class DataSetMaper(BaseModel):
+    meteo: dict[str, dict[str, DataField]] = {}
+    ocean: dict[str, dict[str, DataField]] = {}
+    waves: dict[str, dict[str, DataField]] = {}
 
 
-meteo_data_maps = {
-    "gfsnc_wgrib2": {
-        "pmsl": DataField(name="PRES_surface", mulc=0.01),
-        "tair2m": DataField(name="TMP_2maboveground", addc=-273.15),
-        "x_wind10": DataField(name="UGRD_10maboveground"),
-        "y_wind10": DataField(name="VGRD_10maboveground"),
-    },
-}
+def load_dataset_maper() -> DataSetMaper:
+    import yaml
+
+    default_config_yml = Path(__file__).parent / "config.yml"  # type: ignore
+    with default_config_yml.open("r") as f:
+        config = yaml.safe_load(f)
+    data_set_map = DataSetMaper(**config)
+    return data_set_map
 
 
-# MeteoMap: Enum = Enum("MeteoMap", list(meteo_data_maps.keys()))
-class MeteoMap(str, Enum):
-    gfsnc_wgrib2 = "gfsnc_wgrib2"
+data_maper = load_dataset_maper()
+
+
+MeteoMap = Enum("MeteoMap", {key: key for key in data_maper.meteo.keys()})
+OceanMap = Enum("OceanMap", {key: key for key in data_maper.ocean.keys()})

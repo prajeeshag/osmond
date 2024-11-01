@@ -1,0 +1,25 @@
+meteo: 
+  gfsnc_wgrib2: 
+    pmsl: 
+      name: PRES_surface
+      mulc: 0.01
+    tair2m: 
+      name: TMP_2maboveground
+      addc: -273.15
+    x_wind10:
+      name: UGRD_10maboveground
+    y_wind10: 
+      name: VGRD_10maboveground
+
+ocean: 
+  cmems:
+    uvel:
+      name: ucur
+    vvel: 
+      name: vcur
+    wvel: 
+      name: wcur
+    potemp: 
+      name: thetao
+    psal: 
+      name: so

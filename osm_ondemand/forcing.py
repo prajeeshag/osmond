@@ -7,7 +7,7 @@ import typer
 import xarray as xr
 from xarray.coding.times import decode_cf_datetime  # type: ignore
 
-from .config import MeteoMap, input_fields, meteo_data_maps
+from .config import DataField, Field, MeteoMap, OceanMap, data_maper, input_fields_param
 
 app = typer.Typer()
 
@@ -16,16 +16,40 @@ app = typer.Typer()
 def meteo(
     input: Annotated[Path, typer.Option(help="Input path")],
     lonlatbox: Annotated[str, typer.Option(help="<lonmin>,<lonmax>,<latmin>,<latmax>")],
-    dstype: Annotated[
+    output: Annotated[Path, typer.Option(help="Output path")],
+    dstype: Annotated[  # type: ignore
         MeteoMap, typer.Option(help="Input dataset type")  # type: ignore
-    ] = MeteoMap.gfsnc_wgrib2,  # type: ignore
+    ] = MeteoMap.gfsnc_wgrib2.value,  # type: ignore
 ):
-    """Create Meteorology input forcings"""
+    """Create Meteorology inputs"""
+    data_maps = data_maper.meteo[dstype.value]  # type: ignore
+    process(input, lonlatbox, output, data_maps, input_fields_param["meteo"])
+
+
+@app.command()
+def ocean(
+    input: Annotated[Path, typer.Option(help="Input path")],
+    lonlatbox: Annotated[str, typer.Option(help="<lonmin>,<lonmax>,<latmin>,<latmax>")],
+    output: Annotated[Path, typer.Option(help="Output path")],
+    dstype: Annotated[  # type: ignore
+        OceanMap, typer.Option(help="Input dataset type")  # type: ignore
+    ] = OceanMap.cmems.value,  # type: ignore
+):
+    """Create Ocean inputs"""
+    data_maps = data_maper.ocean[dstype.value]  # type: ignore
+    process(input, lonlatbox, output, data_maps, input_fields_param["ocean"])
+
+
+def process(
+    input: Path,
+    lonlatbox: str,
+    output: Path,
+    data_maps: dict[str, DataField],
+    input_fields: dict[str, Field],
+):
     ds = xr.open_dataset(input, chunks={}, decode_times=False)  # type: ignore
     lonmin, lonmax, latmin, latmax = map(float, lonlatbox.split(","))
-    varname_map = {
-        dfield.name: fname for fname, dfield in meteo_data_maps[dstype].items()
-    }
+    varname_map = {dfield.name: fname for fname, dfield in data_maps.items()}
     ds = ds.rename_vars(varname_map)[list(varname_map.values())]
     subset_vars: dict[str, xr.DataArray] = {
         vname: ds[vname].loc[:, latmin:latmax, lonmin:lonmax]  # type: ignore
@@ -33,7 +57,7 @@ def meteo(
     }
     ds = xr.Dataset(subset_vars)
     ds.load()  # type: ignore
-    for vname, dfield in meteo_data_maps[dstype].items():
+    for vname, dfield in data_maps.items():
         if dfield.addc != 0.0:
             ds[vname] += dfield.addc
         if dfield.mulc != 1.0:
@@ -51,13 +75,13 @@ def meteo(
         ds[vname].attrs["missing_value"] = missing_val
         ds[vname].attrs["valid_min"] = valid_min
         ds[vname].attrs["valid_max"] = valid_max
-        ds[vname].attrs["units"] = input_fields["meteo"][vname].units
-        ds[vname].attrs["standard_name"] = input_fields["meteo"][vname].standard_name
-        ds[vname].attrs["long_name"] = input_fields["meteo"][vname].long_name
+        ds[vname].attrs["units"] = input_fields[vname].units
+        ds[vname].attrs["standard_name"] = input_fields[vname].standard_name
+        ds[vname].attrs["long_name"] = input_fields[vname].long_name
     ds["time"] = process_time(ds["time"])
     ds["longitude"] = ds["longitude"].astype(np.float32)  # type: ignore
     ds["latitude"] = ds["latitude"].astype(np.float32)  # type: ignore
-    ds.to_netcdf("test.nc", unlimited_dims=["time"])  # type: ignore
+    ds.to_netcdf(output, unlimited_dims=["time"])  # type: ignore
 
 
 def process_time(time: xr.DataArray) -> xr.DataArray:
