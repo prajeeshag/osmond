@@ -3,7 +3,7 @@ requires = ["setuptools >= 61.0", "wheel", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "osm_ondemand"
+name = "osmond"
 dynamic = ["version"]
 description = ""
 authors = [{ name = "Prajeesh Ag", email = "prajeeshag@gmail.com" }]
@@ -21,12 +21,12 @@ dependencies = [
 ]
 
 [project.scripts]
-osm_ondemand = "osm_ondemand:app"
+osmond = "osmond:app"
 
 [project.urls]
-homepage = "https://prajeeshag.github.io/osm_ondemand"
-repository = "https://github.com/prajeeshag/osm_ondemand"
-documentation = "https://prajeeshag.github.io/osm_ondemand"
+homepage = "https://prajeeshag.github.io/osmond"
+repository = "https://github.com/prajeeshag/osmond"
+documentation = "https://prajeeshag.github.io/osmond"
 
 [tool.setuptools.packages.find]
 exclude = ["tests", "docs"]
@@ -39,7 +39,7 @@ version_scheme = "guess-next-dev"
 local_scheme = "node-and-timestamp"
 
 [tool.setuptools.package-data]
-"osm_ondemand" = ["static/*"]
+"osmond" = ["static/*"]
 
 [tool.commitizen]
 name = "cz_gitmoji"

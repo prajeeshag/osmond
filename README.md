@@ -1,13 +1,13 @@
 ## Installation
 
 ```console
-git clone https://github.com/prajeeshag/osm_ondemand.git
-cd osm_ondemand
+git clone https://github.com/prajeeshag/osmond.git
+cd osmond
 pip install .
 ```
 
 ## Usage
 For usage refer cli help:
 ```console
-osm_ondemand --help
+osmond --help
 ```

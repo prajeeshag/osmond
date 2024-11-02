@@ -4,14 +4,14 @@ repos:
       - id: pyright
         name: pyright
         description: "Run 'pyright' static type checker"
-        entry: pyright osm_ondemand
+        entry: pyright osmond
         language: system
         types_or: [python, pyi, jupyter]
 
       - id: ruff
         name: ruff
         description: "Run 'ruff' for extremely fast Python linting"
-        entry: ruff check --force-exclude 
+        entry: ruff check --force-exclude
         language: system
         types_or: [python, pyi, jupyter]
         args: []
