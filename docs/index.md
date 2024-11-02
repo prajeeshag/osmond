@@ -1,19 +1,15 @@
 <style>
 </style>
 
-# Welcome to OSM ONDEMAND Documentation
+# OSM ONDEMAND 
 
 ## Installation
 
 <!--termynal-->
 
 ```console
-$ git clone https://github.com/prajeeshag/osmond.git
-$ cd osmond
-$ pip install .
-<!--only-mkdocs-->
+$ pip install git+https://github.com/prajeeshag/osmond.git
 ---> 100%
-<!--/only-mkdocs-->
 ```
 
 ## Usage

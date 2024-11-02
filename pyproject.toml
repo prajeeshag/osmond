@@ -46,8 +46,13 @@ local_scheme = "node-and-timestamp"
 name = "cz_gitmoji"
 
 [tool.uv]
-dev-dependencies = [
-    "commitizen>=3.30.0",
-    "cz-conventional-gitmoji>=0.6.1",
-    "ruff>=0.7.1",
+
+[dependency-groups]
+dev = ["commitizen>=3.30.0", "cz-conventional-gitmoji>=0.6.1", "ruff>=0.7.1"]
+docs = [
+    "osmond",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocs-click",
+    "termynal",
 ]
