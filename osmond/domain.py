@@ -9,7 +9,7 @@ import typer
 import xarray as xr
 from shapely.geometry import Polygon
 
-app = typer.Typer()
+app = typer.Typer(add_completion=False)
 
 
 class CoastLineScale(str, Enum):

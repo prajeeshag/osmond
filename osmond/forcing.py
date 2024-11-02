@@ -17,7 +17,7 @@ from .config import (
     ocean_dataset,
 )
 
-app = typer.Typer()
+app = typer.Typer(add_completion=False)
 
 
 @app.command()
