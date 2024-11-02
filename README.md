@@ -1,13 +1,15 @@
+# Welcome to OSM ONDEMAND Documentation
+
 ## Installation
 
+<div class="termy">
 ```console
-git clone https://github.com/prajeeshag/osmond.git
-cd osmond
-pip install .
+$ git clone https://github.com/prajeeshag/osm_ondemand.git
+$ cd osm_ondemand
+$ pip install .
+---> 100%
 ```
+</div>
 
 ## Usage
-For usage refer cli help:
-```console
-osmond --help
-```
+**Documentation**: https://prajeesh-ag.com/osm_ondemand

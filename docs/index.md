@@ -1,6 +1,18 @@
-# Welcome to OSMOND Documentation
+<style>
+</style>
 
-This is the documentation for the OSM ONDEMAND project.
+# Welcome to OSM ONDEMAND Documentation
 
-## Commands
+## Installation
 
+<div class="termy">
+```console
+$ git clone https://github.com/prajeeshag/osm_ondemand.git
+$ cd osm_ondemand
+$ pip install .
+---> 100%
+```
+</div>
+
+## Usage
+**Documentation**: https://prajeesh-ag.com/osm_ondemand
