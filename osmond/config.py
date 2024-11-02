@@ -1,6 +1,7 @@
 from enum import Enum
 from pathlib import Path
 
+import yaml
 from pydantic import BaseModel, ConfigDict
 
 
@@ -126,8 +127,6 @@ class DataSetMaper(BaseModel):
 
 
 def load_dataset_maper() -> DataSetMaper:
-    import yaml
-
     default_config_yml = Path(__file__).parent / "config.yml"  # type: ignore
     with default_config_yml.open("r") as f:
         config = yaml.safe_load(f)
