@@ -1,5 +1,4 @@
 from pathlib import Path
-from types import MappingProxyType
 from typing import Annotated
 
 import numpy as np
@@ -10,10 +9,7 @@ from xarray.coding.times import decode_cf_datetime  # type: ignore
 
 from .config import (
     DataSetMap,
-    DataSetMaper,
     DataSetType,
-    DataVarMap,
-    FieldAttr,
     MeteoMap,
     OceanMap,
     data_maper,
