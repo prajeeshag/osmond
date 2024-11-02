@@ -10,3 +10,6 @@ theme:
 
 markdown_extensions:
   - mkdocs-click
+
+plugins:
+  - termynal
