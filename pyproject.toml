@@ -29,7 +29,7 @@ repository = "https://github.com/prajeeshag/osmond"
 documentation = "https://prajeeshag.github.io/osmond"
 
 [tool.setuptools.packages.find]
-exclude = ["tests", "docs"]
+where = ["osmond"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
