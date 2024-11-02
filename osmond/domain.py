@@ -78,6 +78,10 @@ def make_domain(
     ] = CoastLineScale.f,
     output: Annotated[Path, typer.Option(help="Output path")] = Path("./output"),
 ):
+    """
+    Creates a Medslik bathymetry `<output>.bath` file from a GEBCO netcdf file
+    and coastline file `<output>.map` from a GSHHS shapefile.
+    """
     lonmin, lonmax, latmin, latmax = map(float, lonlatbox.split(","))
     bathy = xr.open_dataset(bathymetry, chunks={})["elevation"]  # type: ignore
     bds = bathy.loc[latmin:latmax, lonmin:lonmax]  # type: ignore
@@ -123,13 +127,18 @@ def process_coastline(
 
 
 @app.command("plot")
-def plot_domain(inpfile: Path):
+def plot_domain(
+    inpfile: Annotated[
+        Path, typer.Option(help="Path to domain file without extension")
+    ],
+    output: Annotated[Path, typer.Option(help="Output path for plot")],
+):
+    """Plot Medslik domain"""
     import matplotlib.patches as patches
     import matplotlib.pyplot as plt
 
     bathyfile = inpfile.with_suffix(".bath")
     mapfile = inpfile.with_suffix(".map")
-    output = inpfile.with_suffix(".png")
     fig, ax = plt.subplots()  # type: ignore
 
     with bathyfile.open("r") as f:
@@ -176,3 +185,6 @@ def plot_domain(inpfile: Path):
         ax.set_xlim(32, 50.5)
         ax.set_ylim(10, 30)
         plt.savefig(output, dpi=300)  # type: ignore
+
+
+click_app = typer.main.get_command(app)

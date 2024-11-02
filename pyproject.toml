@@ -3,7 +3,7 @@ requires = ["setuptools >= 61.0", "wheel", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "osm_ondemand"
+name = "osmond"
 dynamic = ["version"]
 description = ""
 authors = [{ name = "Prajeesh Ag", email = "prajeeshag@gmail.com" }]
@@ -21,15 +21,16 @@ dependencies = [
 ]
 
 [project.scripts]
-osm_ondemand = "osm_ondemand:app"
+osmond = "osmond:app"
 
 [project.urls]
-homepage = "https://prajeeshag.github.io/osm_ondemand"
-repository = "https://github.com/prajeeshag/osm_ondemand"
-documentation = "https://prajeeshag.github.io/osm_ondemand"
+homepage = "https://prajeeshag.github.io/osmond"
+repository = "https://github.com/prajeeshag/osmond"
+documentation = "https://prajeeshag.github.io/osmond"
 
 [tool.setuptools.packages.find]
-exclude = ["tests", "docs"]
+where = ["."]
+include = ["osmond"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -39,14 +40,19 @@ version_scheme = "guess-next-dev"
 local_scheme = "node-and-timestamp"
 
 [tool.setuptools.package-data]
-"osm_ondemand" = ["static/*"]
+"osmond" = ["static/*"]
 
 [tool.commitizen]
 name = "cz_gitmoji"
 
 [tool.uv]
-dev-dependencies = [
-    "commitizen>=3.30.0",
-    "cz-conventional-gitmoji>=0.6.1",
-    "ruff>=0.7.1",
+
+[dependency-groups]
+dev = ["commitizen>=3.30.0", "cz-conventional-gitmoji>=0.6.1", "ruff>=0.7.1"]
+docs = [
+    "osmond",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocs-click",
+    "termynal",
 ]

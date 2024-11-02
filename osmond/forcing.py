@@ -136,3 +136,6 @@ def compute_scale_and_offset(
     # Compute add_offset
     add_offset = data_min + (data_max - data_min) / 2
     return scale_factor, add_offset, np.int16(missing_value)
+
+
+click_app = typer.main.get_command(app)

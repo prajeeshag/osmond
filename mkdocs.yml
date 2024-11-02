@@ -1,9 +1,22 @@
-site_name: My Docs
+site_name: OSMOND
+repo_name: prajeeshag/osmond
+repo_url: https://github.com/prajeeshag/osmond
 theme:
   name: material
   palette:
-    primary: 'indigo'
-    accent: 'pink'
+    primary: "indigo"
+    accent: "pink"
   font:
-    text: 'Roboto'
-    code: 'Fira Code'
+    text: "Roboto"
+    code: "Fira Code"
+
+markdown_extensions:
+  - attr_list
+  - mkdocs-click
+
+plugins:
+  - termynal
+
+nav:
+  - Home: index.md
+  - Cli: cli.md
