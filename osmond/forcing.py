@@ -51,10 +51,7 @@ def process(
     lonmin, lonmax, latmin, latmax = map(float, lonlatbox.split(","))
     fieldname_map = {dfield.name: fname for fname, dfield in data_maps.items()}
     ds = ds.rename_vars(fieldname_map)[list(fieldname_map.values())]
-    subset_vars: dict[str, xr.DataArray] = {
-        vname: ds[vname].loc[:, latmin:latmax, lonmin:lonmax]  # type: ignore
-        for vname in fieldname_map.values()
-    }
+    subset_vars: dict[str, xr.DataArray] = {}
     for vname in fieldname_map.values():
         if len(ds[vname].shape) == 3:
             subset_vars[vname] = ds[vname].loc[:, latmin:latmax, lonmin:lonmax]  # type: ignore
