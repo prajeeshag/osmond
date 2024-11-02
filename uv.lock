@@ -408,8 +408,8 @@ wheels = [
 ]
 
 [[package]]
-name = "osm-ondemand"
-version = "0.1.dev2+g344106f.d20241101181040"
+name = "osmond"
+version = "0.1.dev6+g52874c0"
 source = { editable = "." }
 dependencies = [
     { name = "cartopy" },
