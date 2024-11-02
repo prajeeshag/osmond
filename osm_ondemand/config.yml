@@ -14,12 +14,8 @@ meteo:
 ocean: 
   cmems:
     uvel:
-      name: ucur
+      name: utotal
     vvel: 
-      name: vcur
-    wvel: 
-      name: wcur
+      name: vtotal
     potemp: 
       name: thetao
-    psal: 
-      name: so

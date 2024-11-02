@@ -49,12 +49,20 @@ def process(
 ):
     ds = xr.open_dataset(input, chunks={}, decode_times=False)  # type: ignore
     lonmin, lonmax, latmin, latmax = map(float, lonlatbox.split(","))
-    varname_map = {dfield.name: fname for fname, dfield in data_maps.items()}
-    ds = ds.rename_vars(varname_map)[list(varname_map.values())]
+    fieldname_map = {dfield.name: fname for fname, dfield in data_maps.items()}
+    ds = ds.rename_vars(fieldname_map)[list(fieldname_map.values())]
     subset_vars: dict[str, xr.DataArray] = {
         vname: ds[vname].loc[:, latmin:latmax, lonmin:lonmax]  # type: ignore
-        for vname in varname_map.values()
+        for vname in fieldname_map.values()
     }
+    for vname in fieldname_map.values():
+        if len(ds[vname].shape) == 3:
+            subset_vars[vname] = ds[vname].loc[:, latmin:latmax, lonmin:lonmax]  # type: ignore
+        elif len(ds[vname].shape) == 4:
+            subset_vars[vname] = ds[vname].loc[:, :, latmin:latmax, lonmin:lonmax]  # type: ignore
+        else:
+            raise ValueError(f"Unexpected shape {ds[vname].shape}")
+
     ds = xr.Dataset(subset_vars)
     ds.load()  # type: ignore
     for vname, dfield in data_maps.items():
