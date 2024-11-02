@@ -29,7 +29,8 @@ repository = "https://github.com/prajeeshag/osmond"
 documentation = "https://prajeeshag.github.io/osmond"
 
 [tool.setuptools.packages.find]
-where = ["osmond"]
+where = ["."]
+include = ["osmond"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

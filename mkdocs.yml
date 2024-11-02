@@ -1,4 +1,6 @@
-site_name: My Docs
+site_name: OSMONDQ
+repo_name: prajeeshag/osmond
+repo_url: https://github.com/prajeeshag/osmond
 theme:
   name: material
   palette:
@@ -9,7 +11,12 @@ theme:
     code: "Fira Code"
 
 markdown_extensions:
+  - attr_list
   - mkdocs-click
 
 plugins:
   - termynal
+
+nav:
+  - Home: index.md
+  - Cli: cli.md

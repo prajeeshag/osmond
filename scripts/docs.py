@@ -22,7 +22,7 @@ def generate_readme_content() -> str:
     new_content = content[frontmatter_end:]
     # Remove content between <!-- only-mkdocs --> and <!-- /only-mkdocs -->
     new_content = re.sub(
-        r"<!-- only-mkdocs -->.*?<!-- /only-mkdocs -->",
+        r"<!--only-mkdocs-->.*?<!--/only-mkdocs-->",
         "",
         new_content,
         flags=re.DOTALL,

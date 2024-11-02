@@ -8,11 +8,13 @@
 <!--termynal-->
 
 ```console
-$ git clone https://github.com/prajeeshag/osm_ondemand.git
-$ cd osm_ondemand
+$ git clone https://github.com/prajeeshag/osmond.git
+$ cd osmond
 $ pip install .
+<!--only-mkdocs-->
 ---> 100%
+<!--/only-mkdocs-->
 ```
 
 ## Usage
-**Documentation**: https://prajeesh-ag.com/osm_ondemand
+**Cli Documentation**: [https://prajeesh-ag.com/osmond/cli](https://prajeesh-ag.com/osmond/cli)
