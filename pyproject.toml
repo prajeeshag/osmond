@@ -50,7 +50,6 @@ name = "cz_gitmoji"
 [dependency-groups]
 dev = ["commitizen>=3.30.0", "cz-conventional-gitmoji>=0.6.1", "ruff>=0.7.1"]
 docs = [
-    "osmond",
     "mkdocs",
     "mkdocs-material",
     "mkdocs-click",
