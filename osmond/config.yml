@@ -1,21 +1,40 @@
 meteo: 
-  gfsnc_wgrib2: 
-    pmsl: 
-      name: PRES_surface
-      mulc: 0.01
-    tair2m: 
-      name: TMP_2maboveground
-      addc: -273.15
-    x_wind10:
-      name: UGRD_10maboveground
-    y_wind10: 
-      name: VGRD_10maboveground
+  gfsnc_wgrib2:
+    data_vars:
+      pmsl: 
+        name: PRES_surface
+        mulc: 0.01
+      tair2m: 
+        name: TMP_2maboveground
+        addc: -273.15
+      x_wind10:
+        name: UGRD_10maboveground
+      y_wind10: 
+        name: VGRD_10maboveground
+    coords:
+      longitude: 
+        name: longitude
+      latitude: 
+        name: latitude
+      time:
+        name: time
+
 
 ocean: 
   cmems:
-    uvel:
-      name: utotal
-    vvel: 
-      name: vtotal
-    potemp: 
-      name: thetao
+    data_vars:
+      uvel:
+        name: utotal
+      vvel: 
+        name: vtotal
+      potemp: 
+        name: thetao
+    coords:
+      longitude: 
+        name: longitude
+      latitude: 
+        name: latitude
+      time:
+        name: time
+      depth:
+        name: depth

@@ -1,4 +1,5 @@
 from pathlib import Path
+from types import MappingProxyType
 from typing import Annotated
 
 import numpy as np
@@ -7,7 +8,18 @@ import typer
 import xarray as xr
 from xarray.coding.times import decode_cf_datetime  # type: ignore
 
-from .config import DataField, Field, MeteoMap, OceanMap, data_maper, input_fields_param
+from .config import (
+    DataSetMap,
+    DataSetMaper,
+    DataSetType,
+    DataVarMap,
+    FieldAttr,
+    MeteoMap,
+    OceanMap,
+    data_maper,
+    meteo_dataset,
+    ocean_dataset,
+)
 
 app = typer.Typer()
 
@@ -23,7 +35,7 @@ def meteo(
 ):
     """Create Meteorology inputs"""
     data_maps = data_maper.meteo[dstype.value]  # type: ignore
-    process(input, lonlatbox, output, data_maps, input_fields_param["meteo"])
+    process(input, lonlatbox, output, data_maps, meteo_dataset)
 
 
 @app.command()
@@ -37,20 +49,22 @@ def ocean(
 ):
     """Create Ocean inputs"""
     data_maps = data_maper.ocean[dstype.value]  # type: ignore
-    process(input, lonlatbox, output, data_maps, input_fields_param["ocean"])
+    process(input, lonlatbox, output, data_maps, ocean_dataset)
 
 
 def process(
     input: Path,
     lonlatbox: str,
     output: Path,
-    data_maps: dict[str, DataField],
-    input_fields: dict[str, Field],
+    dset_map: DataSetMap,
+    dset_type: DataSetType,
 ):
     ds = xr.open_dataset(input, chunks={}, decode_times=False)  # type: ignore
     lonmin, lonmax, latmin, latmax = map(float, lonlatbox.split(","))
-    fieldname_map = {dfield.name: fname for fname, dfield in data_maps.items()}
+    fieldname_map = {dfield.name: fname for fname, dfield in dset_map.data_vars.items()}
     ds = ds.rename_vars(fieldname_map)[list(fieldname_map.values())]
+    coordname_map = {dfield.name: fname for fname, dfield in dset_map.coords.items()}
+    ds = ds.rename_vars(coordname_map)
     subset_vars: dict[str, xr.DataArray] = {}
     for vname in fieldname_map.values():
         if len(ds[vname].shape) == 3:
@@ -62,7 +76,7 @@ def process(
 
     ds = xr.Dataset(subset_vars)
     ds.load()  # type: ignore
-    for vname, dfield in data_maps.items():
+    for vname, dfield in dset_map.data_vars.items():
         if dfield.addc != 0.0:
             ds[vname] += dfield.addc
         if dfield.mulc != 1.0:
@@ -80,9 +94,10 @@ def process(
         ds[vname].attrs["missing_value"] = missing_val
         ds[vname].attrs["valid_min"] = valid_min
         ds[vname].attrs["valid_max"] = valid_max
-        ds[vname].attrs["units"] = input_fields[vname].units
-        ds[vname].attrs["standard_name"] = input_fields[vname].standard_name
-        ds[vname].attrs["long_name"] = input_fields[vname].long_name
+        data_vars_type = dset_type["data_vars"][vname]
+        ds[vname].attrs["units"] = data_vars_type.units
+        ds[vname].attrs["standard_name"] = data_vars_type.standard_name
+        ds[vname].attrs["long_name"] = data_vars_type.long_name
     ds["time"] = process_time(ds["time"])
     ds["longitude"] = ds["longitude"].astype(np.float32)  # type: ignore
     ds["latitude"] = ds["latitude"].astype(np.float32)  # type: ignore
