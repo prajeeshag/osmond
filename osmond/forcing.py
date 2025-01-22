@@ -39,12 +39,12 @@ def ocean(
     input: Annotated[Path, typer.Option(help="Input path")],
     lonlatbox: Annotated[str, typer.Option(help="<lonmin>,<lonmax>,<latmin>,<latmax>")],
     output: Annotated[Path, typer.Option(help="Output path")],
-    dstype: Annotated[  # type: ignore
+    input_dstype: Annotated[  # type: ignore
         OceanMap, typer.Option(help="Input dataset type")  # type: ignore
     ] = OceanMap.cmems.value,  # type: ignore
 ):
     """Create Ocean inputs"""
-    data_maps = data_maper.ocean[dstype.value]  # type: ignore
+    data_maps = data_maper.ocean[input_dstype.value]  # type: ignore
     process(input, lonlatbox, output, data_maps, ocean_dataset)
 
 
@@ -144,6 +144,46 @@ def compute_scale_and_offset(
     # Compute add_offset
     add_offset = data_min + (data_max - data_min) / 2
     return scale_factor, add_offset, np.int16(missing_value)
+
+
+def subset_forcings(
+    infiles: list[str],
+    lonmin: float,
+    lonmax: float,
+    latmin: float,
+    latmax: float,
+    output_dir: str,
+):
+    for infile in infiles:
+        fname = Path(infile).name
+        output = Path(output_dir) / fname
+        subset_forcing(infile, lonmin, lonmax, latmin, latmax, output.as_posix())
+
+
+def subset_forcing(
+    infile: str,
+    lonmin: float,
+    lonmax: float,
+    latmin: float,
+    latmax: float,
+    output: str,
+):
+    ds = xr.open_dataset(infile, chunks={}, decode_times=False)  # type: ignore
+    subset_vars: dict[str, xr.DataArray] = {}
+    for var in ds.data_vars:
+        if len(ds[var].shape) == 3:  # type: ignore
+            subset_vars[var] = ds[var].loc[:, latmin:latmax, lonmin:lonmax]  # type: ignore
+        elif len(ds[var].shape) == 4:  # type: ignore
+            subset_vars[var] = ds[var].loc[:, :, latmin:latmax, lonmin:lonmax]  # type: ignore
+        else:
+            raise ValueError(
+                f"Unexpected shape {ds[var].shape} for variable '{var}' in file '{infile}'"  # type: ignore
+            )
+
+    ds = xr.Dataset(subset_vars)
+    ds.load()  # type: ignore
+    Path(output).parent.mkdir(parents=True, exist_ok=True)
+    ds.to_netcdf(output)  # type: ignore
 
 
 click_app = typer.main.get_command(app)

@@ -81,13 +81,54 @@ def make_domain(
     """
     Creates a Medslik bathymetry `<output>.bath` file from a GEBCO netcdf file
     and coastline file `<output>.map` from a GSHHS shapefile.
+
+    e.g. osmond domain create --bathymetry GEBCO_2024_sub_ice_topo.nc --lonlatbox 32,50.5,10,30  --output redsea
     """
     lonmin, lonmax, latmin, latmax = map(float, lonlatbox.split(","))
+    create_domain(
+        bathymetry.as_posix(),
+        lonmin,
+        lonmax,
+        latmin,
+        latmax,
+        output.as_posix(),
+        coastline_scale,
+    )
+
+
+def create_domain(
+    bathymetry: str,
+    lonmin: float,
+    lonmax: float,
+    latmin: float,
+    latmax: float,
+    output: str = "./output",
+    coastline_scale: CoastLineScale = CoastLineScale.f,
+) -> tuple[Path, Path]:
+    """
+    Creates a Medslik bathymetry `<output>.bath` and coastline file `<output>.map`
+    from a GEBCO netcdf file and GSHHS shapefile.
+
+    Arguments:
+        bathymetry: Path to GEBCO netcdf bathymetry file
+        lonmin: Minimum longitude
+        lonmax: Maximum longitude
+        latmin: Minimum latitude
+        latmax: Maximum latitude
+        coastline_scale: GSHHS coastline resolution `fine|high|intermediate|low|coarse`
+        output: Output path defaults to `./output`
+    Returns:
+        Path to Medslik domain files (<output>.bath, <output>.map)
+    """
     bathy = xr.open_dataset(bathymetry, chunks={})["elevation"]  # type: ignore
     bds = bathy.loc[latmin:latmax, lonmin:lonmax]  # type: ignore
-    output_bathy = output.with_suffix(".bath")
+    output_path = Path(output)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_bathy = output_path.with_suffix(".bath")
+    output_map = output_path.with_suffix(".map")
     write_bathy(bds, output_bathy)  # type: ignore
-    process_coastline(output, coastline_scale, lonmin, lonmax, latmin, latmax)
+    process_coastline(output_map, coastline_scale, lonmin, lonmax, latmin, latmax)
+    return output_bathy, output_map
 
 
 def process_coastline(
@@ -101,7 +142,7 @@ def process_coastline(
     shpfilename: str = shpreader.gshhs(scale=coastline_scale.name, level=1)  # type: ignore
     subset_shp = subset_shapefile(shpfilename, lonmin, lonmax, latmin, latmax)  # type: ignore
     nfeatures = subset_shp.shape[0]  # type: ignore
-    path = output.with_suffix(".map")
+    path = output
 
     flines = [""]
     nfeatures = 0

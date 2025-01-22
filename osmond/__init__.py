@@ -1,7 +1,15 @@
 import typer
 
 from .domain import app as domain_app
+from .domain import create_domain
 from .forcing import app as forcing_app
+from .forcing import subset_forcing, subset_forcings
+
+__all__ = [
+    "subset_forcing",
+    "subset_forcings",
+    "create_domain",
+]
 
 app = typer.Typer(add_completion=False)
 
