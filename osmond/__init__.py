@@ -3,12 +3,13 @@ import typer
 from .domain import app as domain_app
 from .domain import create_domain
 from .forcing import app as forcing_app
-from .forcing import subset_forcing, subset_forcings
+from .forcing import process_meteo_files, process_ocean_files, process_wave_files
 
 __all__ = [
-    "subset_forcing",
-    "subset_forcings",
     "create_domain",
+    "process_meteo_files",
+    "process_ocean_files",
+    "process_wave_files",
 ]
 
 app = typer.Typer(add_completion=False)

@@ -12,9 +12,11 @@ from .config import (
     DataSetType,
     MeteoMap,
     OceanMap,
+    WaveMap,
     data_maper,
     meteo_dataset,
     ocean_dataset,
+    waves_dataset,
 )
 
 app = typer.Typer(add_completion=False)
@@ -31,7 +33,8 @@ def meteo(
 ):
     """Create Meteorology inputs"""
     data_maps = data_maper.meteo[dstype.value]  # type: ignore
-    process(input, lonlatbox, output, data_maps, meteo_dataset)
+    lonlatbox_list = list(map(float, lonlatbox.split(",")))
+    process(input, lonlatbox_list, output, data_maps, meteo_dataset)
 
 
 @app.command()
@@ -45,18 +48,19 @@ def ocean(
 ):
     """Create Ocean inputs"""
     data_maps = data_maper.ocean[input_dstype.value]  # type: ignore
-    process(input, lonlatbox, output, data_maps, ocean_dataset)
+    lonlatbox_list = list(map(float, lonlatbox.split(",")))
+    process(input, lonlatbox_list, output, data_maps, ocean_dataset)
 
 
 def process(
     input: Path,
-    lonlatbox: str,
+    lonlatbox: list[float],
     output: Path,
     dset_map: DataSetMap,
     dset_type: DataSetType,
 ):
     ds = xr.open_dataset(input, chunks={}, decode_times=False)  # type: ignore
-    lonmin, lonmax, latmin, latmax = map(float, lonlatbox.split(","))
+    lonmin, lonmax, latmin, latmax = lonlatbox
     fieldname_map = {dfield.name: fname for fname, dfield in dset_map.data_vars.items()}
     ds = ds.rename_vars(fieldname_map)[list(fieldname_map.values())]
     coordname_map = {dfield.name: fname for fname, dfield in dset_map.coords.items()}
@@ -69,6 +73,16 @@ def process(
             subset_vars[vname] = ds[vname].loc[:, :, latmin:latmax, lonmin:lonmax]  # type: ignore
         else:
             raise ValueError(f"Unexpected shape {ds[vname].shape}")
+
+        if dset_map.depth_mapping:
+            da = subset_vars[vname]
+            subset_vars[vname] = xr.concat(  # type: ignore
+                [
+                    da.assign_coords(depth=[depth])  # type: ignore
+                    for depth in dset_map.depth_mapping.output_levels
+                ],
+                dim="depth",
+            )
 
     ds = xr.Dataset(subset_vars)
     ds.load()  # type: ignore
@@ -94,9 +108,11 @@ def process(
         ds[vname].attrs["units"] = data_vars_type.units
         ds[vname].attrs["standard_name"] = data_vars_type.standard_name
         ds[vname].attrs["long_name"] = data_vars_type.long_name
+
     ds["time"] = process_time(ds["time"])
     ds["longitude"] = ds["longitude"].astype(np.float32)  # type: ignore
     ds["latitude"] = ds["latitude"].astype(np.float32)  # type: ignore
+
     ds.to_netcdf(output, unlimited_dims=["time"])  # type: ignore
 
 
@@ -184,6 +200,105 @@ def subset_forcing(
     ds.load()  # type: ignore
     Path(output).parent.mkdir(parents=True, exist_ok=True)
     ds.to_netcdf(output)  # type: ignore
+
+
+def process_meteo_file(
+    infile: str,
+    lonmin: float,
+    lonmax: float,
+    latmin: float,
+    latmax: float,
+    output_dir: str,
+):
+    """Create Meteorology inputs"""
+    data_maps = data_maper.meteo[MeteoMap.gfsnc_wgrib2.value]  # type: ignore
+    output = Path(output_dir) / Path(infile).name
+    process(
+        Path(infile),
+        [lonmin, lonmax, latmin, latmax],
+        output,
+        data_maps,
+        meteo_dataset,
+    )
+
+
+def process_ocean_file(
+    infile: str,
+    lonmin: float,
+    lonmax: float,
+    latmin: float,
+    latmax: float,
+    output_dir: str,
+):
+    """Create Ocean inputs"""
+    data_maps = data_maper.ocean[OceanMap.cmems.value]  # type: ignore
+    output = Path(output_dir) / Path(infile).name
+    process(
+        Path(infile),
+        [lonmin, lonmax, latmin, latmax],
+        output,
+        data_maps,
+        ocean_dataset,
+    )
+
+
+def process_wave_file(
+    infile: str,
+    lonmin: float,
+    lonmax: float,
+    latmin: float,
+    latmax: float,
+    output_dir: str,
+):
+    """Create Ocean inputs"""
+    data_maps = data_maper.waves[WaveMap.cmems.value]  # type: ignore
+    output = Path(output_dir) / Path(infile).name
+    process(
+        Path(infile),
+        [lonmin, lonmax, latmin, latmax],
+        output,
+        data_maps,
+        waves_dataset,
+    )
+
+
+def process_meteo_files(
+    infiles: list[str],
+    lonmin: float,
+    lonmax: float,
+    latmin: float,
+    latmax: float,
+    output_dir: str,
+):
+    """Create Meteorology inputs"""
+    for infile in infiles:
+        process_meteo_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
+
+
+def process_ocean_files(
+    infiles: list[str],
+    lonmin: float,
+    lonmax: float,
+    latmin: float,
+    latmax: float,
+    output_dir: str,
+):
+    """Create ocean inputs"""
+    for infile in infiles:
+        process_ocean_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
+
+
+def process_wave_files(
+    infiles: list[str],
+    lonmin: float,
+    lonmax: float,
+    latmin: float,
+    latmax: float,
+    output_dir: str,
+):
+    """Create wave inputs"""
+    for infile in infiles:
+        process_wave_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
 
 
 click_app = typer.main.get_command(app)

@@ -38,3 +38,23 @@ ocean:
         name: time
       depth:
         name: depth
+    depth_mapping:
+      output_levels: [1, 2, 4, 6]
+
+
+waves: 
+  cmems:
+    data_vars:
+      wsh:
+        name: VHM0
+      wdir: 
+        name: VMDR
+      wper:
+        name: VTM02
+    coords:
+      longitude: 
+        name: longitude
+      latitude: 
+        name: latitude
+      time:
+        name: time

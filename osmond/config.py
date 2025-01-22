@@ -94,6 +94,31 @@ ocean_dataset = MappingProxyType(
     }
 )
 
+waves_dataset = MappingProxyType(
+    {
+        "coords": MappingProxyType(coords_common),
+        "data_vars": MappingProxyType(
+            {
+                "wsh": FieldAttr(
+                    standard_name="sea_surface_wave_significant_height",
+                    long_name="Sea Surface Wave Significant Height",
+                    units="m",
+                ),
+                "wper": FieldAttr(
+                    standard_name="sea_surface_wave_zero_upcrossing_period",
+                    long_name="Mean Wave Period",
+                    units="s",
+                ),
+                "wdir": FieldAttr(
+                    standard_name="sea_surface_wave_to_direction",
+                    long_name="Sea Surface Wave Direction",
+                    units="degrees",
+                ),
+            }
+        ),
+    }
+)
+
 
 class DataVarMap(ModelBase):
     name: str
@@ -107,10 +132,7 @@ class DepthMapping(Enum):
 
 
 class DepthMaping(ModelBase):
-    mapping: DepthMapping = DepthMapping.copy
-    input_indices: list[int] = [1]
-    input_levels: list[float]
-    output_levels: list[float] = [1, 2, 4, 6]
+    output_levels: list[float]
 
 
 class DataSetMap(BaseModel):
@@ -122,19 +144,22 @@ class DataSetMap(BaseModel):
 class DataSetMaper(BaseModel):
     meteo: dict[str, DataSetMap] = {}
     ocean: dict[str, DataSetMap] = {}
+    waves: dict[str, DataSetMap] = {}
 
     @model_validator(mode="after")
     def check_coords_and_data_vars(self) -> Self:
-        for dsname, dsmap in self.meteo.items():
-            if dsmap.coords.keys() != meteo_dataset["coords"].keys():
-                raise ValueError(f"Coordinates does not match for dataset {dsname}")
-            if dsmap.data_vars.keys() != meteo_dataset["data_vars"].keys():
-                raise ValueError(f"Data variables does not match for dataset {dsname}")
-        for dsname, dsmap in self.ocean.items():
-            if dsmap.coords.keys() != ocean_dataset["coords"].keys():
-                raise ValueError(f"Coordinates does not match for dataset {dsname}")
-            if dsmap.data_vars.keys() != ocean_dataset["data_vars"].keys():
-                raise ValueError(f"Data variables does not match for dataset {dsname}")
+        for item, dataset in [
+            (self.meteo, meteo_dataset),
+            (self.ocean, ocean_dataset),
+            (self.waves, waves_dataset),
+        ]:
+            for dsname, dsmap in item.items():
+                if dsmap.coords.keys() != dataset["coords"].keys():
+                    raise ValueError(f"Coordinates does not match for dataset {dsname}")
+                if dsmap.data_vars.keys() != dataset["data_vars"].keys():
+                    raise ValueError(
+                        f"Data variables does not match for dataset {dsname}"
+                    )
         return self
 
 
@@ -150,3 +175,4 @@ data_maper = load_dataset_maper()
 
 MeteoMap = Enum("MeteoMap", {key: key for key in data_maper.meteo.keys()})
 OceanMap = Enum("OceanMap", {key: key for key in data_maper.ocean.keys()})
+WaveMap = Enum("WaveMap", {key: key for key in data_maper.waves.keys()})
