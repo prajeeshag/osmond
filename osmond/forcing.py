@@ -267,7 +267,7 @@ def process_ocean_files(
 
     Example:\n
         >>> infiles = ["/path/to/input1.nc", "/path/to/input2.nc"]
-        >>> lonmin = 0.0
+        >>> lonmin = -10.0
         >>> lonmax = 10.0
         >>> latmin = -5.0
         >>> latmax = 5.0
@@ -309,7 +309,7 @@ def process_wave_files(
 
     Example:\n
         >>> infiles = ["/path/to/input1.nc", "/path/to/input2.nc"]
-        >>> lonmin = 0.0
+        >>> lonmin = -10.0
         >>> lonmax = 10.0
         >>> latmin = -5.0
         >>> latmax = 5.0
