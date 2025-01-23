@@ -1,9 +1,7 @@
 from pathlib import Path
-from typing import Annotated
 
 import numpy as np
 import pandas as pd
-import typer
 import xarray as xr
 from xarray.coding.times import decode_cf_datetime  # type: ignore
 
@@ -18,38 +16,6 @@ from .config import (
     ocean_dataset,
     waves_dataset,
 )
-
-app = typer.Typer(add_completion=False)
-
-
-@app.command()
-def meteo(
-    input: Annotated[Path, typer.Option(help="Input path")],
-    lonlatbox: Annotated[str, typer.Option(help="<lonmin>,<lonmax>,<latmin>,<latmax>")],
-    output: Annotated[Path, typer.Option(help="Output path")],
-    dstype: Annotated[  # type: ignore
-        MeteoMap, typer.Option(help="Input dataset type")  # type: ignore
-    ] = MeteoMap.gfsnc_wgrib2.value,  # type: ignore
-):
-    """Create Meteorology inputs"""
-    data_maps = data_maper.meteo[dstype.value]  # type: ignore
-    lonlatbox_list = list(map(float, lonlatbox.split(",")))
-    process(input, lonlatbox_list, output, data_maps, meteo_dataset)
-
-
-@app.command()
-def ocean(
-    input: Annotated[Path, typer.Option(help="Input path")],
-    lonlatbox: Annotated[str, typer.Option(help="<lonmin>,<lonmax>,<latmin>,<latmax>")],
-    output: Annotated[Path, typer.Option(help="Output path")],
-    input_dstype: Annotated[  # type: ignore
-        OceanMap, typer.Option(help="Input dataset type")  # type: ignore
-    ] = OceanMap.cmems.value,  # type: ignore
-):
-    """Create Ocean inputs"""
-    data_maps = data_maper.ocean[input_dstype.value]  # type: ignore
-    lonlatbox_list = list(map(float, lonlatbox.split(",")))
-    process(input, lonlatbox_list, output, data_maps, ocean_dataset)
 
 
 def process(
@@ -270,7 +236,36 @@ def process_meteo_files(
     latmax: float,
     output_dir: str,
 ):
-    """Create Meteorology inputs"""
+    """
+    Processes multiple meteorology input files and generates outputs for a specified geographic bounding box.
+
+    Args:
+        infiles (list[str]):
+            A list of input file paths to process.
+        lonmin (float):
+            The minimum longitude for the geographic bounding box.
+        lonmax (float):
+            The maximum longitude for the geographic bounding box.
+        latmin (float):
+            The minimum latitude for the geographic bounding box.
+        latmax (float):
+            The maximum latitude for the geographic bounding box.
+        output_dir (str):
+            The directory where processed files will be saved.
+
+    Returns:
+        None:
+            This function does not return a value. Processed files are saved in the specified `output_dir`.
+
+    Example:\n
+        >>> infiles = ["/path/to/input1.nc", "/path/to/input2.nc"]
+        >>> lonmin = -10.0
+        >>> lonmax = 10.0
+        >>> latmin = -5.0
+        >>> latmax = 5.0
+        >>> output_dir = "/path/to/output"
+        >>> process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)
+    """
     for infile in infiles:
         process_meteo_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
 
@@ -283,7 +278,36 @@ def process_ocean_files(
     latmax: float,
     output_dir: str,
 ):
-    """Create ocean inputs"""
+    """
+    Processes multiple ocean input files and generates outputs for a specified geographic bounding box.
+
+    Args:
+        infiles (list[str]):
+            A list of input file paths to process.
+        lonmin (float):
+            The minimum longitude for the geographic bounding box.
+        lonmax (float):
+            The maximum longitude for the geographic bounding box.
+        latmin (float):
+            The minimum latitude for the geographic bounding box.
+        latmax (float):
+            The maximum latitude for the geographic bounding box.
+        output_dir (str):
+            The directory where processed files will be saved.
+
+    Returns:
+        None:
+            This function does not return a value. Processed files are saved in the specified `output_dir`.
+
+    Example:\n
+        >>> infiles = ["/path/to/input1.nc", "/path/to/input2.nc"]
+        >>> lonmin = -10.0
+        >>> lonmax = 10.0
+        >>> latmin = -5.0
+        >>> latmax = 5.0
+        >>> output_dir = "/path/to/output"
+        >>> process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)
+    """
     for infile in infiles:
         process_ocean_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
 
@@ -296,9 +320,35 @@ def process_wave_files(
     latmax: float,
     output_dir: str,
 ):
-    """Create wave inputs"""
+    """
+    Processes multiple wave input files and generates outputs for a specified geographic bounding box.
+
+    Args:
+        infiles (list[str]):
+            A list of input file paths to process.
+        lonmin (float):
+            The minimum longitude for the geographic bounding box.
+        lonmax (float):
+            The maximum longitude for the geographic bounding box.
+        latmin (float):
+            The minimum latitude for the geographic bounding box.
+        latmax (float):
+            The maximum latitude for the geographic bounding box.
+        output_dir (str):
+            The directory where processed files will be saved.
+
+    Returns:
+        None:
+            This function does not return a value. Processed files are saved in the specified `output_dir`.
+
+    Example:\n
+        >>> infiles = ["/path/to/input1.nc", "/path/to/input2.nc"]
+        >>> lonmin = -10.0
+        >>> lonmax = 10.0
+        >>> latmin = -5.0
+        >>> latmax = 5.0
+        >>> output_dir = "/path/to/output"
+        >>> process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)
+    """
     for infile in infiles:
         process_wave_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
-
-
-click_app = typer.main.get_command(app)

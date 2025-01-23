@@ -1,15 +1,11 @@
 from enum import Enum
 from pathlib import Path
-from typing import Annotated
 
 import cartopy.io.shapereader as shpreader  # type: ignore
 import geopandas as gpd  # type: ignore
 import numpy as np
-import typer
 import xarray as xr
 from shapely.geometry import Polygon
-
-app = typer.Typer(add_completion=False)
 
 
 class CoastLineScale(str, Enum):
@@ -67,70 +63,6 @@ def subset_shapefile(  # type: ignore
     return clipped_shp  # type: ignore
 
 
-@app.command("create")
-def make_domain(
-    bathymetry: Annotated[
-        Path, typer.Option(help="Path to GEBCO netcdf bathymetry file")
-    ],
-    lonlatbox: Annotated[str, typer.Option(help="<lonmin>,<lonmax>,<latmin>,<latmax>")],
-    coastline_scale: Annotated[
-        CoastLineScale, typer.Option(help="GSHHS coastline resolution")
-    ] = CoastLineScale.f,
-    output: Annotated[Path, typer.Option(help="Output path")] = Path("./output"),
-):
-    """
-    Creates a Medslik bathymetry `<output>.bath` file from a GEBCO netcdf file
-    and coastline file `<output>.map` from a GSHHS shapefile.
-
-    e.g. osmond domain create --bathymetry GEBCO_2024_sub_ice_topo.nc --lonlatbox 32,50.5,10,30  --output redsea
-    """
-    lonmin, lonmax, latmin, latmax = map(float, lonlatbox.split(","))
-    create_domain(
-        bathymetry.as_posix(),
-        lonmin,
-        lonmax,
-        latmin,
-        latmax,
-        output.as_posix(),
-        coastline_scale,
-    )
-
-
-def create_domain(
-    bathymetry: str,
-    lonmin: float,
-    lonmax: float,
-    latmin: float,
-    latmax: float,
-    output: str = "./output",
-    coastline_scale: CoastLineScale = CoastLineScale.f,
-) -> tuple[Path, Path]:
-    """
-    Creates a Medslik bathymetry `<output>.bath` and coastline file `<output>.map`
-    from a GEBCO netcdf file and GSHHS shapefile.
-
-    Arguments:
-        bathymetry: Path to GEBCO netcdf bathymetry file
-        lonmin: Minimum longitude
-        lonmax: Maximum longitude
-        latmin: Minimum latitude
-        latmax: Maximum latitude
-        coastline_scale: GSHHS coastline resolution `fine|high|intermediate|low|coarse`
-        output: Output path defaults to `./output`
-    Returns:
-        Path to Medslik domain files (<output>.bath, <output>.map)
-    """
-    bathy = xr.open_dataset(bathymetry, chunks={})["elevation"]  # type: ignore
-    bds = bathy.loc[latmin:latmax, lonmin:lonmax]  # type: ignore
-    output_path = Path(output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_bathy = output_path.with_suffix(".bath")
-    output_map = output_path.with_suffix(".map")
-    write_bathy(bds, output_bathy)  # type: ignore
-    process_coastline(output_map, coastline_scale, lonmin, lonmax, latmin, latmax)
-    return output_bathy, output_map
-
-
 def process_coastline(
     output: Path,
     coastline_scale: CoastLineScale,
@@ -167,65 +99,59 @@ def process_coastline(
             f.write(line)
 
 
-@app.command("plot")
-def plot_domain(
-    inpfile: Annotated[
-        Path, typer.Option(help="Path to domain file without extension")
-    ],
-    output: Annotated[Path, typer.Option(help="Output path for plot")],
-):
-    """Plot Medslik domain"""
-    import matplotlib.patches as patches
-    import matplotlib.pyplot as plt
+def create_domain(
+    bathymetry: str,
+    lonmin: float,
+    lonmax: float,
+    latmin: float,
+    latmax: float,
+    output: str = "./output",
+    coastline_scale: CoastLineScale = CoastLineScale.f,
+) -> tuple[Path, Path]:
+    """
+    Creates a Medslik bathymetry and coastline file from a GEBCO netCDF file and GSHHS shapefile.
 
-    bathyfile = inpfile.with_suffix(".bath")
-    mapfile = inpfile.with_suffix(".map")
-    fig, ax = plt.subplots()  # type: ignore
+    Args:
+        bathymetry (str):
+            Path to the GEBCO netCDF bathymetry file.
+        lonmin (float):
+            Minimum longitude of the domain.
+        lonmax (float):
+            Maximum longitude of the domain.
+        latmin (float):
+            Minimum latitude of the domain.
+        latmax (float):
+            Maximum latitude of the domain.
+        output (str, optional):
+            Path for the output files
+        coastline_scale (CoastLineScale, optional):
+            GSHHS coastline resolution. Options are:\n\n
+            - `f` (fine)
+            - `h` (high)
+            - `i` (intermediate)
+            - `l` (low)
+            - `c` (coarse)
 
-    with bathyfile.open("r") as f:
-        line = f.readline()
-        line = f.readline()
-        lonmin, lonmax, latmin, latmax = map(float, line.split())
-        line = f.readline()
-        nlon, nlat = map(int, line.split())
-        lon = np.linspace(lonmin, lonmax, nlon)
-        lat = np.linspace(latmin, latmax, nlat)
-        bathy: list[list[int]] = []
-        for _ in range(nlat):
-            line = f.readline()
-            bathy.append(list(map(int, line.split())))
-        bathy_array = np.array(list(reversed(bathy)))
-        bathy_array = np.where(bathy_array == 9999, np.nan, bathy_array)
-        print(lon.shape, lat.shape, bathy_array.shape)
-        cs = ax.pcolormesh(lon, lat, bathy_array)  # type: ignore
-        fig.colorbar(cs, ax=ax)  # type: ignore
+    Returns:
+            A tuple containing the path to the generated Medslik bathymetry file (`<output>.bath`) and coastline file (`<output>.map`).
 
-    with mapfile.open("r") as f:
-        f.readline()
-        line = f.readline()
-        nfeatures = 0
-        while line != "":
-            npoints, _ = map(int, line.split())
-            # if mask == 1:
-            nfeatures += 1
-            coords: list[tuple[float, float]] = []
-            for _ in range(npoints):
-                line = f.readline()
-                coord = tuple(map(float, line.split()))  # type: ignore
-                # print(coord, line)
-                if coord:
-                    coords.append(coord)  # type: ignore
-                else:
-                    break
-            coords.append(coords[0])
-            polygon = patches.Polygon(
-                coords, closed=True, edgecolor="orange", facecolor="none"
-            )
-            ax.add_patch(polygon)
-            line = f.readline()
-        ax.set_xlim(32, 50.5)
-        ax.set_ylim(10, 30)
-        plt.savefig(output, dpi=300)  # type: ignore
+    Example:\n
+        >>> bathymetry = "/path/to/GEBCO_bathymetry.nc"
+        >>> lonmin = -10.0
+        >>> lonmax = 10.0
+        >>> latmin = -5.0
+        >>> latmax = 5.0
+        >>> output = "./workdir/domain_output"
+        >>> coastline_scale = CoastLineScale.h
+        >>> create_domain(bathymetry, lonmin, lonmax, latmin, latmax, output, coastline_scale)
 
-
-click_app = typer.main.get_command(app)
+    """
+    bathy = xr.open_dataset(bathymetry, chunks={})["elevation"]  # type: ignore
+    bds = bathy.loc[latmin:latmax, lonmin:lonmax]  # type: ignore
+    output_path = Path(output)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_bathy = output_path.with_suffix(".bath")
+    output_map = output_path.with_suffix(".map")
+    write_bathy(bds, output_bathy)  # type: ignore
+    process_coastline(output_map, coastline_scale, lonmin, lonmax, latmin, latmax)
+    return output_bathy, output_map

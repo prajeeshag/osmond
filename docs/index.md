@@ -13,4 +13,4 @@ $ pip install git+https://github.com/prajeeshag/osmond.git
 ```
 
 ## Usage
-**Cli Documentation**: [https://prajeesh-ag.com/osmond/cli](https://prajeesh-ag.com/osmond/cli)
+**API Documentation**: [https://prajeesh-ag.com/osmond/docs](https://prajeesh-ag.com/osmond/docs)

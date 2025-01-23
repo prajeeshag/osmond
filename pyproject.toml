@@ -13,7 +13,6 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
     "xarray",
     "netCDF4",
-    "typer",
     "dask",
     "cartopy",
     "geopandas",
@@ -52,6 +51,7 @@ dev = ["commitizen>=3.30.0", "cz-conventional-gitmoji>=0.6.1", "ruff>=0.7.1"]
 docs = [
     "mkdocs",
     "mkdocs-material",
-    "mkdocs-click",
+    "mkdocstrings[python]>=0.18",
     "termynal",
+    "typer>=0.15.1",
 ]

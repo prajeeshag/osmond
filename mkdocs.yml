@@ -12,11 +12,15 @@ theme:
 
 markdown_extensions:
   - attr_list
-  - mkdocs-click
 
 plugins:
   - termynal
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            annotations_path: brief
 
 nav:
   - Home: index.md
-  - Cli: cli.md
+  - API reference: api_reference.md
