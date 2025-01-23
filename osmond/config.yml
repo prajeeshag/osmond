@@ -24,9 +24,9 @@ ocean:
   cmems:
     data_vars:
       uvel:
-        name: utotal
+        name: uo
       vvel: 
-        name: vtotal
+        name: vo
       potemp: 
         name: thetao
     coords:
