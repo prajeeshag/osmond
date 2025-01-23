@@ -10,4 +10,4 @@ $ pip install git+https://github.com/prajeeshag/osmond.git
 ```
 
 ## Usage
-**API Documentation**: [https://prajeesh-ag.com/osmond/docs](https://prajeesh-ag.com/osmond/docs)
+**API Reference**: [https://prajeesh-ag.com/osmond/api_reference](https://prajeesh-ag.com/osmond/api_reference)
