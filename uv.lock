@@ -590,7 +590,7 @@ wheels = [
 
 [[package]]
 name = "osmond"
-version = "0.1.dev24+g73cb7e7.d20250123090616"
+version = "0.1.dev24+g73cb7e7.d20250123090618"
 source = { editable = "." }
 dependencies = [
     { name = "cartopy" },
