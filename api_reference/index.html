@@ -1,0 +1,1512 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>API reference - OSMOND</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../termynal.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#osmond-api-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OSMOND" class="md-header__button md-logo" aria-label="OSMOND" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OSMOND
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/prajeeshag/osmond" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    prajeeshag/osmond
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OSMOND" class="md-nav__button md-logo" aria-label="OSMOND" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OSMOND
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/prajeeshag/osmond" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    prajeeshag/osmond
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    API reference
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    API reference
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#osmond" class="md-nav__link">
+    <span class="md-ellipsis">
+      osmond
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#osmond.create_domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_domain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#osmond.process_meteo_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      process_meteo_files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#osmond.process_ocean_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      process_ocean_files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#osmond.process_wave_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      process_wave_files
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#osmond" class="md-nav__link">
+    <span class="md-ellipsis">
+      osmond
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#osmond.create_domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_domain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#osmond.process_meteo_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      process_meteo_files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#osmond.process_ocean_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      process_ocean_files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#osmond.process_wave_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      process_wave_files
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="osmond-api-documentation">OSMOND API Documentation</h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="osmond"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="osmond.create_domain" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">create_domain</span><span class="p">(</span><span class="n">bathymetry</span><span class="p">,</span> <span class="n">lonmin</span><span class="p">,</span> <span class="n">lonmax</span><span class="p">,</span> <span class="n">latmin</span><span class="p">,</span> <span class="n">latmax</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;./output&#39;</span><span class="p">,</span> <span class="n">coastline_scale</span><span class="o">=</span><span class="n">CoastLineScale</span><span class="o">.</span><span class="n">f</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a Medslik bathymetry and coastline file from a GEBCO netCDF file and GSHHS shapefile.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>bathymetry</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Path to the GEBCO netCDF bathymetry file.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lonmin</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Minimum longitude of the domain.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lonmax</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum longitude of the domain.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>latmin</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Minimum latitude of the domain.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>latmax</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum latitude of the domain.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Path for the output files</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;./output&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>coastline_scale</code>
+            </td>
+            <td>
+                  <code><span title="osmond.domain.CoastLineScale">CoastLineScale</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>GSHHS coastline resolution. Options are:</p>
+<ul>
+<li><code>f</code> (fine)</li>
+<li><code>h</code> (high)</li>
+<li><code>i</code> (intermediate)</li>
+<li><code>l</code> (low)</li>
+<li><code>c</code> (coarse)</li>
+</ul>
+              </div>
+            </td>
+            <td>
+                  <code><span title="osmond.domain.CoastLineScale">CoastLineScale</span>.<span title="osmond.domain.CoastLineScale.f">f</span></code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code>tuple[<span title="pathlib.Path">Path</span>, <span title="pathlib.Path">Path</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A tuple containing the path to the generated Medslik bathymetry file (<code>&lt;output&gt;.bath</code>) and coastline file (<code>&lt;output&gt;.map</code>).</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Example:</p>
+<pre><code>&gt;&gt;&gt; bathymetry = "/path/to/GEBCO_bathymetry.nc"
+&gt;&gt;&gt; lonmin = -10.0
+&gt;&gt;&gt; lonmax = 10.0
+&gt;&gt;&gt; latmin = -5.0
+&gt;&gt;&gt; latmax = 5.0
+&gt;&gt;&gt; output = "./workdir/domain_output"
+&gt;&gt;&gt; coastline_scale = CoastLineScale.h
+&gt;&gt;&gt; create_domain(bathymetry, lonmin, lonmax, latmin, latmax, output, coastline_scale)
+</code></pre>
+
+            <details class="quote">
+              <summary>Source code in <code>osmond/domain.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_domain</span><span class="p">(</span>
+    <span class="n">bathymetry</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">lonmin</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">lonmax</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">latmin</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">latmax</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./output&quot;</span><span class="p">,</span>
+    <span class="n">coastline_scale</span><span class="p">:</span> <span class="n">CoastLineScale</span> <span class="o">=</span> <span class="n">CoastLineScale</span><span class="o">.</span><span class="n">f</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a Medslik bathymetry and coastline file from a GEBCO netCDF file and GSHHS shapefile.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bathymetry (str):</span>
+<span class="sd">            Path to the GEBCO netCDF bathymetry file.</span>
+<span class="sd">        lonmin (float):</span>
+<span class="sd">            Minimum longitude of the domain.</span>
+<span class="sd">        lonmax (float):</span>
+<span class="sd">            Maximum longitude of the domain.</span>
+<span class="sd">        latmin (float):</span>
+<span class="sd">            Minimum latitude of the domain.</span>
+<span class="sd">        latmax (float):</span>
+<span class="sd">            Maximum latitude of the domain.</span>
+<span class="sd">        output (str, optional):</span>
+<span class="sd">            Path for the output files</span>
+<span class="sd">        coastline_scale (CoastLineScale, optional):</span>
+<span class="sd">            GSHHS coastline resolution. Options are:\n\n</span>
+<span class="sd">            - `f` (fine)</span>
+<span class="sd">            - `h` (high)</span>
+<span class="sd">            - `i` (intermediate)</span>
+<span class="sd">            - `l` (low)</span>
+<span class="sd">            - `c` (coarse)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">            A tuple containing the path to the generated Medslik bathymetry file (`&lt;output&gt;.bath`) and coastline file (`&lt;output&gt;.map`).</span>
+
+<span class="sd">    Example:\n</span>
+<span class="sd">        &gt;&gt;&gt; bathymetry = &quot;/path/to/GEBCO_bathymetry.nc&quot;</span>
+<span class="sd">        &gt;&gt;&gt; lonmin = -10.0</span>
+<span class="sd">        &gt;&gt;&gt; lonmax = 10.0</span>
+<span class="sd">        &gt;&gt;&gt; latmin = -5.0</span>
+<span class="sd">        &gt;&gt;&gt; latmax = 5.0</span>
+<span class="sd">        &gt;&gt;&gt; output = &quot;./workdir/domain_output&quot;</span>
+<span class="sd">        &gt;&gt;&gt; coastline_scale = CoastLineScale.h</span>
+<span class="sd">        &gt;&gt;&gt; create_domain(bathymetry, lonmin, lonmax, latmin, latmax, output, coastline_scale)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bathy</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">bathymetry</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="p">{})[</span><span class="s2">&quot;elevation&quot;</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+    <span class="n">bds</span> <span class="o">=</span> <span class="n">bathy</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">latmin</span><span class="p">:</span><span class="n">latmax</span><span class="p">,</span> <span class="n">lonmin</span><span class="p">:</span><span class="n">lonmax</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+    <span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="n">output_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">output_bathy</span> <span class="o">=</span> <span class="n">output_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">&quot;.bath&quot;</span><span class="p">)</span>
+    <span class="n">output_map</span> <span class="o">=</span> <span class="n">output_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">&quot;.map&quot;</span><span class="p">)</span>
+    <span class="n">write_bathy</span><span class="p">(</span><span class="n">bds</span><span class="p">,</span> <span class="n">output_bathy</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+    <span class="n">process_coastline</span><span class="p">(</span><span class="n">output_map</span><span class="p">,</span> <span class="n">coastline_scale</span><span class="p">,</span> <span class="n">lonmin</span><span class="p">,</span> <span class="n">lonmax</span><span class="p">,</span> <span class="n">latmin</span><span class="p">,</span> <span class="n">latmax</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_bathy</span><span class="p">,</span> <span class="n">output_map</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="osmond.process_meteo_files" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">process_meteo_files</span><span class="p">(</span><span class="n">infiles</span><span class="p">,</span> <span class="n">lonmin</span><span class="p">,</span> <span class="n">lonmax</span><span class="p">,</span> <span class="n">latmin</span><span class="p">,</span> <span class="n">latmax</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Processes multiple meteorology input files and generates outputs for a specified geographic bounding box.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>infiles</code>
+            </td>
+            <td>
+                  <code>list[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A list of input file paths to process.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lonmin</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The minimum longitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lonmax</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The maximum longitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>latmin</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The minimum latitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>latmax</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The maximum latitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dir</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The directory where processed files will be saved.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>None</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>This function does not return a value. Processed files are saved in the specified <code>output_dir</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Example:</p>
+<pre><code>&gt;&gt;&gt; infiles = ["/path/to/input1.nc", "/path/to/input2.nc"]
+&gt;&gt;&gt; lonmin = -10.0
+&gt;&gt;&gt; lonmax = 10.0
+&gt;&gt;&gt; latmin = -5.0
+&gt;&gt;&gt; latmax = 5.0
+&gt;&gt;&gt; output_dir = "/path/to/output"
+&gt;&gt;&gt; process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)
+</code></pre>
+
+            <details class="quote">
+              <summary>Source code in <code>osmond/forcing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_meteo_files</span><span class="p">(</span>
+    <span class="n">infiles</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">lonmin</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">lonmax</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">latmin</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">latmax</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes multiple meteorology input files and generates outputs for a specified geographic bounding box.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        infiles (list[str]):</span>
+<span class="sd">            A list of input file paths to process.</span>
+<span class="sd">        lonmin (float):</span>
+<span class="sd">            The minimum longitude for the geographic bounding box.</span>
+<span class="sd">        lonmax (float):</span>
+<span class="sd">            The maximum longitude for the geographic bounding box.</span>
+<span class="sd">        latmin (float):</span>
+<span class="sd">            The minimum latitude for the geographic bounding box.</span>
+<span class="sd">        latmax (float):</span>
+<span class="sd">            The maximum latitude for the geographic bounding box.</span>
+<span class="sd">        output_dir (str):</span>
+<span class="sd">            The directory where processed files will be saved.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None:</span>
+<span class="sd">            This function does not return a value. Processed files are saved in the specified `output_dir`.</span>
+
+<span class="sd">    Example:\n</span>
+<span class="sd">        &gt;&gt;&gt; infiles = [&quot;/path/to/input1.nc&quot;, &quot;/path/to/input2.nc&quot;]</span>
+<span class="sd">        &gt;&gt;&gt; lonmin = -10.0</span>
+<span class="sd">        &gt;&gt;&gt; lonmax = 10.0</span>
+<span class="sd">        &gt;&gt;&gt; latmin = -5.0</span>
+<span class="sd">        &gt;&gt;&gt; latmax = 5.0</span>
+<span class="sd">        &gt;&gt;&gt; output_dir = &quot;/path/to/output&quot;</span>
+<span class="sd">        &gt;&gt;&gt; process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">infile</span> <span class="ow">in</span> <span class="n">infiles</span><span class="p">:</span>
+        <span class="n">process_meteo_file</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">lonmin</span><span class="p">,</span> <span class="n">lonmax</span><span class="p">,</span> <span class="n">latmin</span><span class="p">,</span> <span class="n">latmax</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="osmond.process_ocean_files" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">process_ocean_files</span><span class="p">(</span><span class="n">infiles</span><span class="p">,</span> <span class="n">lonmin</span><span class="p">,</span> <span class="n">lonmax</span><span class="p">,</span> <span class="n">latmin</span><span class="p">,</span> <span class="n">latmax</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Processes multiple ocean input files and generates outputs for a specified geographic bounding box.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>infiles</code>
+            </td>
+            <td>
+                  <code>list[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A list of input file paths to process.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lonmin</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The minimum longitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lonmax</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The maximum longitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>latmin</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The minimum latitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>latmax</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The maximum latitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dir</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The directory where processed files will be saved.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>None</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>This function does not return a value. Processed files are saved in the specified <code>output_dir</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Example:</p>
+<pre><code>&gt;&gt;&gt; infiles = ["/path/to/input1.nc", "/path/to/input2.nc"]
+&gt;&gt;&gt; lonmin = -10.0
+&gt;&gt;&gt; lonmax = 10.0
+&gt;&gt;&gt; latmin = -5.0
+&gt;&gt;&gt; latmax = 5.0
+&gt;&gt;&gt; output_dir = "/path/to/output"
+&gt;&gt;&gt; process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)
+</code></pre>
+
+            <details class="quote">
+              <summary>Source code in <code>osmond/forcing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_ocean_files</span><span class="p">(</span>
+    <span class="n">infiles</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">lonmin</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">lonmax</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">latmin</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">latmax</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes multiple ocean input files and generates outputs for a specified geographic bounding box.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        infiles (list[str]):</span>
+<span class="sd">            A list of input file paths to process.</span>
+<span class="sd">        lonmin (float):</span>
+<span class="sd">            The minimum longitude for the geographic bounding box.</span>
+<span class="sd">        lonmax (float):</span>
+<span class="sd">            The maximum longitude for the geographic bounding box.</span>
+<span class="sd">        latmin (float):</span>
+<span class="sd">            The minimum latitude for the geographic bounding box.</span>
+<span class="sd">        latmax (float):</span>
+<span class="sd">            The maximum latitude for the geographic bounding box.</span>
+<span class="sd">        output_dir (str):</span>
+<span class="sd">            The directory where processed files will be saved.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None:</span>
+<span class="sd">            This function does not return a value. Processed files are saved in the specified `output_dir`.</span>
+
+<span class="sd">    Example:\n</span>
+<span class="sd">        &gt;&gt;&gt; infiles = [&quot;/path/to/input1.nc&quot;, &quot;/path/to/input2.nc&quot;]</span>
+<span class="sd">        &gt;&gt;&gt; lonmin = -10.0</span>
+<span class="sd">        &gt;&gt;&gt; lonmax = 10.0</span>
+<span class="sd">        &gt;&gt;&gt; latmin = -5.0</span>
+<span class="sd">        &gt;&gt;&gt; latmax = 5.0</span>
+<span class="sd">        &gt;&gt;&gt; output_dir = &quot;/path/to/output&quot;</span>
+<span class="sd">        &gt;&gt;&gt; process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">infile</span> <span class="ow">in</span> <span class="n">infiles</span><span class="p">:</span>
+        <span class="n">process_ocean_file</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">lonmin</span><span class="p">,</span> <span class="n">lonmax</span><span class="p">,</span> <span class="n">latmin</span><span class="p">,</span> <span class="n">latmax</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="osmond.process_wave_files" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">process_wave_files</span><span class="p">(</span><span class="n">infiles</span><span class="p">,</span> <span class="n">lonmin</span><span class="p">,</span> <span class="n">lonmax</span><span class="p">,</span> <span class="n">latmin</span><span class="p">,</span> <span class="n">latmax</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Processes multiple wave input files and generates outputs for a specified geographic bounding box.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>infiles</code>
+            </td>
+            <td>
+                  <code>list[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A list of input file paths to process.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lonmin</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The minimum longitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lonmax</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The maximum longitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>latmin</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The minimum latitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>latmax</code>
+            </td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The maximum latitude for the geographic bounding box.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dir</code>
+            </td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The directory where processed files will be saved.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>None</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>This function does not return a value. Processed files are saved in the specified <code>output_dir</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Example:</p>
+<pre><code>&gt;&gt;&gt; infiles = ["/path/to/input1.nc", "/path/to/input2.nc"]
+&gt;&gt;&gt; lonmin = -10.0
+&gt;&gt;&gt; lonmax = 10.0
+&gt;&gt;&gt; latmin = -5.0
+&gt;&gt;&gt; latmax = 5.0
+&gt;&gt;&gt; output_dir = "/path/to/output"
+&gt;&gt;&gt; process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)
+</code></pre>
+
+            <details class="quote">
+              <summary>Source code in <code>osmond/forcing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_wave_files</span><span class="p">(</span>
+    <span class="n">infiles</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">lonmin</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">lonmax</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">latmin</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">latmax</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes multiple wave input files and generates outputs for a specified geographic bounding box.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        infiles (list[str]):</span>
+<span class="sd">            A list of input file paths to process.</span>
+<span class="sd">        lonmin (float):</span>
+<span class="sd">            The minimum longitude for the geographic bounding box.</span>
+<span class="sd">        lonmax (float):</span>
+<span class="sd">            The maximum longitude for the geographic bounding box.</span>
+<span class="sd">        latmin (float):</span>
+<span class="sd">            The minimum latitude for the geographic bounding box.</span>
+<span class="sd">        latmax (float):</span>
+<span class="sd">            The maximum latitude for the geographic bounding box.</span>
+<span class="sd">        output_dir (str):</span>
+<span class="sd">            The directory where processed files will be saved.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None:</span>
+<span class="sd">            This function does not return a value. Processed files are saved in the specified `output_dir`.</span>
+
+<span class="sd">    Example:\n</span>
+<span class="sd">        &gt;&gt;&gt; infiles = [&quot;/path/to/input1.nc&quot;, &quot;/path/to/input2.nc&quot;]</span>
+<span class="sd">        &gt;&gt;&gt; lonmin = -10.0</span>
+<span class="sd">        &gt;&gt;&gt; lonmax = 10.0</span>
+<span class="sd">        &gt;&gt;&gt; latmin = -5.0</span>
+<span class="sd">        &gt;&gt;&gt; latmax = 5.0</span>
+<span class="sd">        &gt;&gt;&gt; output_dir = &quot;/path/to/output&quot;</span>
+<span class="sd">        &gt;&gt;&gt; process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">infile</span> <span class="ow">in</span> <span class="n">infiles</span><span class="p">:</span>
+        <span class="n">process_wave_file</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">lonmin</span><span class="p">,</span> <span class="n">lonmax</span><span class="p">,</span> <span class="n">latmin</span><span class="p">,</span> <span class="n">latmax</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../termynal.js"></script>
+      
+    
+  </body>
+</html>
