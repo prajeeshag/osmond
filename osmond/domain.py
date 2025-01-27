@@ -3,6 +3,7 @@ from pathlib import Path
 
 import cartopy.io.shapereader as shpreader  # type: ignore
 import geopandas as gpd  # type: ignore
+import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
 from shapely.geometry import Polygon
@@ -27,12 +28,12 @@ def write_bathy(bathy: xr.DataArray, path: Path, name: str = ""):
         lon2 = bathy["lon"].values[-1]  # type: ignore
         lat1 = bathy["lat"].values[0]  # type: ignore
         lat2 = bathy["lat"].values[-1]  # type: ignore
-        f.write(f"   {lon1:10.6f} {lon2:10.6f} {lat1:10.6f} {lat2:10.6f}\n")
+        f.write(f"    {lon1:10.6f} {lon2:10.6f} {lat1:10.6f} {lat2:10.6f}\n")
 
         # nlon nlat in Fortran XX2(xF10.6)
         nlat = bathy.shape[0]
         nlon = bathy.shape[1]
-        f.write(f"  {nlon} {nlat}\n")
+        f.write(f"   {nlon} {nlat}\n")
 
         # invert bathy values and clip to 9000
         bathy_values = -1 * bathy.values  # type: ignore
@@ -61,6 +62,36 @@ def subset_shapefile(  # type: ignore
     )
     clipped_shp = gpd.clip(shp, selection_box)  # type: ignore
     return clipped_shp  # type: ignore
+
+
+def process_coastline_from_bathy(bathy: xr.DataArray, output: Path):
+    lon, lat, val = bathy["lon"], bathy["lat"], bathy.values[:, :]  # type: ignore
+    val[0, :] = 1.0
+    val[-1, :] = 1.0
+    val[:, 0] = 1.0
+    val[:, -1] = 1.0
+
+    contour = plt.contour(lon, lat, val, levels=[0])  # type: ignore
+    plt.axis("off")  # type: ignore
+    plt.savefig("test.png")  # type: ignore
+
+    geometries = []
+    for collection in contour.collections:
+        for path in collection.get_paths():
+            for coordinates in path.to_polygons():
+                geometries.append(coordinates)  # type: ignore
+
+    nfeatures = len(geometries)  # type: ignore
+    flines = [f"{nfeatures}\n"]
+    for geom in geometries:  # type: ignore
+        feature_len = len(geom)  # type: ignore
+        flines.append(f"{feature_len}  0\n")
+        for g in geom:  # type: ignore
+            flines.append(f"{g[0]:10.5f} {g[1]:10.5f}\n")
+
+    with output.open("w") as f:
+        for line in flines:
+            f.write(line)
 
 
 def process_coastline(
@@ -153,5 +184,6 @@ def create_domain(
     output_bathy = output_path.with_suffix(".bath")
     output_map = output_path.with_suffix(".map")
     write_bathy(bds, output_bathy)  # type: ignore
-    process_coastline(output_map, coastline_scale, lonmin, lonmax, latmin, latmax)
+    process_coastline_from_bathy(bds, output_map)  # type: ignore
+    # process_coastline(output_map, coastline_scale, lonmin, lonmax, latmin, latmax)
     return output_bathy, output_map

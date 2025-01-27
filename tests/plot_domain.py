@@ -65,6 +65,7 @@ def plot_domain(
             line = f.readline()
         # ax.set_xlim(32, 50.5)
         # ax.set_ylim(10, 30)
+        plt.axis("off")
         plt.savefig(output, dpi=300)  # type: ignore
 
 
