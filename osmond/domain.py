@@ -19,7 +19,7 @@ class CoastLineScale(str, Enum):
 
 def write_bathy(bathy: xr.DataArray, path: Path, name: str = ""):
     with path.open("w") as f:
-        title = "Bathymetry"
+        title = " Bathymetry"
         if name:
             title = f"{title} of {name}"
         f.write(f"{title}\n")
@@ -28,19 +28,19 @@ def write_bathy(bathy: xr.DataArray, path: Path, name: str = ""):
         lon2 = bathy["lon"].values[-1]  # type: ignore
         lat1 = bathy["lat"].values[0]  # type: ignore
         lat2 = bathy["lat"].values[-1]  # type: ignore
-        f.write(f"    {lon1:10.6f} {lon2:10.6f} {lat1:10.6f} {lat2:10.6f}\n")
+        f.write(f"    {lon1:.6f}  {lon2:.6f}  {lat1:.6f}  {lat2:.6f}\n")
 
         # nlon nlat in Fortran XX2(xF10.6)
         nlat = bathy.shape[0]
         nlon = bathy.shape[1]
-        f.write(f"   {nlon} {nlat}\n")
+        f.write(f"    {nlon}  {nlat}\n")
 
         # invert bathy values and clip to 9000
         bathy_values = -1 * bathy.values  # type: ignore
         bathy_values[bathy_values > 9000] = 9000  # type: ignore
         bathy_values[bathy_values <= 0] = 9999.0  # type: ignore
         bathy_values = np.flip(bathy_values, axis=0)
-        np.savetxt(f, bathy_values, fmt="%04.0f")  # type: ignore
+        np.savetxt(f, bathy_values, fmt="%4.0f")  # type: ignore
 
 
 def subset_shapefile(  # type: ignore
