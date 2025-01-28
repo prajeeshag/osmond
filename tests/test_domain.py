@@ -1,11 +1,6 @@
 import glob
 
-from osmond import (
-    create_domain,
-    process_meteo_files,
-    process_ocean_files,
-    process_wave_files,
-)
+from osmond import create_domain
 
 # box = [-20.0, -10.0, 10.0, 30.0]
 # box = [17.39, 19.289, 32.47, 34.27]

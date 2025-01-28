@@ -73,13 +73,11 @@ def process_coastline_from_bathy(bathy: xr.DataArray, output: Path):
 
     contour = plt.contour(lon, lat, val, levels=[0])  # type: ignore
     plt.axis("off")  # type: ignore
-    plt.savefig("test.png")  # type: ignore
 
     geometries = []
-    for collection in contour.collections:
-        for path in collection.get_paths():
-            for coordinates in path.to_polygons():
-                geometries.append(coordinates)  # type: ignore
+    for path in contour.get_paths():
+        for coordinates in path.to_polygons():
+            geometries.append(coordinates)  # type: ignore
 
     nfeatures = len(geometries)  # type: ignore
     flines = [f"{nfeatures}\n"]
