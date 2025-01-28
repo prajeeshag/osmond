@@ -590,12 +590,13 @@ wheels = [
 
 [[package]]
 name = "osmond"
-version = "0.1.dev24+g73cb7e7.d20250123090618"
+version = "0.1.dev31+g8320e67.d20250128072335"
 source = { editable = "." }
 dependencies = [
     { name = "cartopy" },
     { name = "dask" },
     { name = "geopandas" },
+    { name = "matplotlib" },
     { name = "netcdf4" },
     { name = "pydantic" },
     { name = "xarray" },
@@ -620,6 +621,7 @@ requires-dist = [
     { name = "cartopy" },
     { name = "dask" },
     { name = "geopandas" },
+    { name = "matplotlib", specifier = ">=3.9.2" },
     { name = "netcdf4" },
     { name = "pydantic", specifier = ">=2.9.2" },
     { name = "xarray" },

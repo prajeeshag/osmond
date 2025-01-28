@@ -17,6 +17,7 @@ dependencies = [
     "cartopy",
     "geopandas",
     "pydantic>=2.9.2",
+    "matplotlib>=3.9.2",
 ]
 
 [project.scripts]
