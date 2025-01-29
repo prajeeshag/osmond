@@ -40,7 +40,7 @@ def write_bathy(bathy: xr.DataArray, path: Path, name: str = ""):
         bathy_values[bathy_values > 9000] = 9000  # type: ignore
         bathy_values[bathy_values <= 0] = 9999.0  # type: ignore
         bathy_values = np.flip(bathy_values, axis=0)
-        np.savetxt(f, bathy_values, fmt="%4.0f")  # type: ignore
+        np.savetxt(f, bathy_values, fmt="%5.0f", delimiter="")  # type: ignore
 
 
 def subset_shapefile(  # type: ignore
