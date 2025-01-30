@@ -91,10 +91,13 @@ def process_time(time: xr.DataArray) -> xr.DataArray:
     time = time - time[0]
     if units_interval == "seconds":
         time = time / 3600
-        units_interval = "hours"
+        units_interval = "Hours"
     elif units_interval == "minutes":
         time = time / 60
-        units_interval = "hours"
+        units_interval = "Hours"
+    elif units_interval == "days":
+        time = time * 24
+        units_interval = "Hours"
     time.attrs["units"] = f"{units_interval} since {start_date}"
     time.attrs["calendar"] = "julian"
     return time.astype(np.float32)  # type: ignore
