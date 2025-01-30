@@ -18,6 +18,7 @@ dependencies = [
     "geopandas",
     "pydantic>=2.9.2",
     "matplotlib>=3.9.2",
+    "cf-xarray>=0.10.0",
 ]
 
 [project.scripts]

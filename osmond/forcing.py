@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import cf_xarray  # type: ignore
 import numpy as np
 import pandas as pd
 import xarray as xr
@@ -18,6 +19,28 @@ from .config import (
 )
 
 
+def subset(
+    darray: xr.DataArray,
+    lonmin: float,
+    lonmax: float,
+    latmin: float,
+    latmax: float,
+) -> xr.DataArray:
+    lon_name = darray.cf.axes["X"][0]
+    lat_name = darray.cf.axes["Y"][0]
+    lat_subset = darray.sel({lat_name: slice(latmin, latmax)})  # type: ignore
+    if lonmin > lonmax:
+        return xr.concat(  # type: ignore
+            [
+                lat_subset.sel({lon_name: slice(lonmin, None)}),  # type: ignore
+                lat_subset.sel({lon_name: slice(None, lonmax)}),  # type: ignore
+            ],
+            dim=lon_name,
+        )
+    else:
+        return lat_subset.sel({lon_name: slice(lonmin, lonmax)})  # type: ignore
+
+
 def process(
     input: Path,
     lonlatbox: list[float],
@@ -33,12 +56,7 @@ def process(
     ds = ds.rename_vars(coordname_map)
     subset_vars: dict[str, xr.DataArray] = {}
     for vname in fieldname_map.values():
-        if len(ds[vname].shape) == 3:
-            subset_vars[vname] = ds[vname].loc[:, latmin:latmax, lonmin:lonmax]  # type: ignore
-        elif len(ds[vname].shape) == 4:
-            subset_vars[vname] = ds[vname].loc[:, :, latmin:latmax, lonmin:lonmax]  # type: ignore
-        else:
-            raise ValueError(f"Unexpected shape {ds[vname].shape}")
+        subset_vars[vname] = subset(ds[vname], lonmin, lonmax, latmin, latmax)
 
         if dset_map.depth_mapping:
             da = subset_vars[vname]
@@ -80,6 +98,7 @@ def process(
     ds["latitude"] = ds["latitude"].astype(np.float32)  # type: ignore
     output.parent.mkdir(parents=True, exist_ok=True)
     ds.to_netcdf(output, unlimited_dims=["time"])  # type: ignore
+    return ds
 
 
 def process_time(time: xr.DataArray) -> xr.DataArray:
@@ -148,7 +167,7 @@ def process_meteo_file(
     lonmax = to_360(lonmax)
     data_maps = data_maper.meteo[MeteoMap.gfsnc_wgrib2.value]  # type: ignore
     output = Path(output_dir) / Path(infile).name
-    process(
+    return process(
         Path(infile),
         [lonmin, lonmax, latmin, latmax],
         output,
@@ -168,7 +187,7 @@ def process_ocean_file(
     """Create Ocean inputs"""
     data_maps = data_maper.ocean[OceanMap.cmems.value]  # type: ignore
     output = Path(output_dir) / Path(infile).name
-    process(
+    return process(
         Path(infile),
         [lonmin, lonmax, latmin, latmax],
         output,
@@ -188,7 +207,7 @@ def process_wave_file(
     """Create Ocean inputs"""
     data_maps = data_maper.waves[WaveMap.cmems.value]  # type: ignore
     output = Path(output_dir) / Path(infile).name
-    process(
+    return process(
         Path(infile),
         [lonmin, lonmax, latmin, latmax],
         output,
@@ -235,8 +254,12 @@ def process_meteo_files(
         >>> output_dir = "/path/to/output"
         >>> process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)
     """
+    ret: list[xr.Dataset] = []
     for infile in infiles:
-        process_meteo_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
+        ret.append(  # type: ignore
+            process_meteo_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
+        )
+    return ret  # type: ignore
 
 
 def process_ocean_files(
@@ -277,8 +300,12 @@ def process_ocean_files(
         >>> output_dir = "/path/to/output"
         >>> process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)
     """
+    ret: list[xr.Dataset] = []
     for infile in infiles:
-        process_ocean_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
+        ret.append(  # type: ignore
+            process_ocean_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
+        )
+    return ret  # type: ignore
 
 
 def process_wave_files(
@@ -319,5 +346,9 @@ def process_wave_files(
         >>> output_dir = "/path/to/output"
         >>> process_meteo_files(infiles, lonmin, lonmax, latmin, latmax, output_dir)
     """
+    ret: list[xr.Dataset] = []
     for infile in infiles:
-        process_wave_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
+        ret.append(  # type: ignore
+            process_wave_file(infile, lonmin, lonmax, latmin, latmax, output_dir)
+        )
+    return ret  # type: ignore

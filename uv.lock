@@ -67,6 +67,18 @@ wheels = [
 ]
 
 [[package]]
+name = "cf-xarray"
+version = "0.10.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "xarray" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/35/c4/d1caa4212b9be4af61db5a8e5bd719d24b739bceb949cb18424792b9dbde/cf_xarray-0.10.0.tar.gz", hash = "sha256:7b45319fc315175854c9e701a84ebb795eb4b2764a2d05bd2d9d3ea87d004d18", size = 511869 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1b/2c/7ba6a2a7ad421075ec3bd33ff4b5067763816687d2da95ea0751eee9621f/cf_xarray-0.10.0-py3-none-any.whl", hash = "sha256:24ea127556d014960b0a469227692157c2cd56abc443801d3e5919bb0399c1f1", size = 69794 },
+]
+
+[[package]]
 name = "cftime"
 version = "1.6.4.post1"
 source = { registry = "https://pypi.org/simple" }
@@ -590,10 +602,11 @@ wheels = [
 
 [[package]]
 name = "osmond"
-version = "0.1.dev31+g8320e67.d20250128072336"
+version = "0.1.dev36+g04658b9.d20250130135125"
 source = { editable = "." }
 dependencies = [
     { name = "cartopy" },
+    { name = "cf-xarray" },
     { name = "dask" },
     { name = "geopandas" },
     { name = "matplotlib" },
@@ -619,6 +632,7 @@ docs = [
 [package.metadata]
 requires-dist = [
     { name = "cartopy" },
+    { name = "cf-xarray", specifier = ">=0.10.0" },
     { name = "dask" },
     { name = "geopandas" },
     { name = "matplotlib", specifier = ">=3.9.2" },
