@@ -95,6 +95,7 @@ def process(
 
     ds["time"] = process_time(ds["time"])
     ds["longitude"] = ds["longitude"].astype(np.float32)  # type: ignore
+    ds = ds.assign_coords(longitude=(ds["longitude"].values + 180) % 360 - 180)  # type: ignore
     ds["latitude"] = ds["latitude"].astype(np.float32)  # type: ignore
     output.parent.mkdir(parents=True, exist_ok=True)
     ds.to_netcdf(output, unlimited_dims=["time"])  # type: ignore
